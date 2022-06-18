@@ -3,7 +3,7 @@
 //navigatorオブジェクトはブラウザに関する情報を管理する。
 //navigatorオブジェクトの参照を返す
 if("serviceWorker" in navigator){
-    navigator.serviceWorker.register("/sw.js").catch((err) => console.error(err));
+    navigator.serviceWorker.register("./sw.js").catch((err) => console.error(err));
 }
 
 

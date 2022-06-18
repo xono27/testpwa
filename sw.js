@@ -20,7 +20,8 @@ const appShellFiles = [
     "/serviceworker/icons/favicon.ico",
     "/serviceworker/icons/app.js",
     "/serviceworker/icons/index.html",
-    "/serviceworker/icons/style.css"
+    "/serviceworker/icons/style.css",
+    "/serviceworker/site.webmanifest"
 ]
 const contentToCache = appShellFiles
 

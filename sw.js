@@ -60,10 +60,6 @@ self.addEventListener('fetch', (event) => {
                   if (response) {
                       return response;
                   }
-
-                  // 重要：リクエストを clone する。リクエストは Stream なので
-                  // 一度しか処理できない。ここではキャッシュ用、fetch 用と2回
-                  // 必要なので、リクエストは clone しないといけない
                   let fetchRequest = event.request.clone();
 
                   return fetch(fetchRequest)
@@ -71,10 +67,6 @@ self.addEventListener('fetch', (event) => {
                           if (!response || response.status !== 200 || response.type !== 'basic') {
                               return response;
                           }
-
-                          // 重要：レスポンスを clone する。レスポンスは Stream で
-                          // ブラウザ用とキャッシュ用の2回必要。なので clone して
-                          // 2つの Stream があるようにする
                           let responseToCache = response.clone();
 
                           caches.open(cacheName)
@@ -101,16 +93,5 @@ self.addEventListener("activate",(e) => {
     )
 })
 
-self.addEventListener("push",(e) => {
-    e.waitUntil(
-        self.registration.showNotification("新しい記事",{
-            body:"PWAに関する新しい記事を書きました",
-            icon:"./icons/android-chrome-192x192.png",
-            tag:"new-pwa-article"
-        }) 
-    )
-})
 
-
-//サービスワーカーがどこにインストールされるのか
 

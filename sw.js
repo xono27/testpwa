@@ -11,17 +11,17 @@
 const cacheName ='cache-v1'
 //ServiceWorkerで扱うファイル・キャッシュしておくファイル
 const appShellFiles = [
-    "/serviceworker/icons/android-chrome-192x192.png",
-    "/serviceworker/icons/android-chrome-384x384.png",
-    "/serviceworker/icons/apple-touch-icon.png",
-    "/serviceworker/icons/favicon-16x16.png",
-    "/serviceworker/icons/favicon-32x32.png",
-    "/serviceworker/icons/favicon-16x16.png",
-    "/serviceworker/icons/favicon.ico",
-    "/serviceworker/icons/app.js",
-    "/serviceworker/icons/index.html",
-    "/serviceworker/icons/style.css",
-    "/serviceworker/site.webmanifest"
+"/icons/android-chrome-192x192.png",
+"/icons/android-chrome-384x384.png",
+"/icons/apple-touch-icon.png",
+"/icons/favicon-16x16.png",
+"/icons/favicon-32x32.png",
+"/icons/favicon-16x16.png",
+"/icons/favicon.ico",
+"/app.js",
+"/index.html",
+"/style.css",
+"/site.webmanifest"
 ]
 const contentToCache = appShellFiles
 

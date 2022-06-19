@@ -22,5 +22,6 @@
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "display": "standalone",
+    "sender_id":"208108995242",
     "start_url":"https://imppwa.herokuapp.com/"
 }

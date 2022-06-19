@@ -19,6 +19,7 @@ const appShellFiles = [
 "/icons/favicon-16x16.png",
 "/icons/favicon.ico",
 "/app.js",
+"/index.js",
 "/index.html",
 "/style.css",
 "/site.webmanifest"
@@ -40,20 +41,55 @@ self.addEventListener("install",(e) => {
 
 
 //ブラウザからサーバーへのリクエストを傍受する
-self.addEventListener("fetch",(e) => {
-    e.respondWith((async () => {
-        const r = await caches.match(e.request);
-        if(r)return r;
-        const fetchRequest = e.request.clone();
-        const response = await fetch(fetchRequest);
-        const cache = await caches.open(cacheName);
-        cache.put(e.request,response.clone());
-        return response;
-    }))
-})
+// self.addEventListener("fetch",(e) => {
+//     e.respondWith((async () => {
+//         const r = await caches.match(e.request);
+//         if(r)return r;
+//         const fetchRequest = e.request.clone();
+//         const response = await fetch(fetchRequest);
+//         const cache = await caches.open(cacheName);
+//         cache.put(e.request,response.clone());
+//         return response;
+//     }))
+// })
+
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+        caches.match(event.request)
+              .then((response) => {
+                  if (response) {
+                      return response;
+                  }
+
+                  // 重要：リクエストを clone する。リクエストは Stream なので
+                  // 一度しか処理できない。ここではキャッシュ用、fetch 用と2回
+                  // 必要なので、リクエストは clone しないといけない
+                  let fetchRequest = event.request.clone();
+
+                  return fetch(fetchRequest)
+                      .then((response) => {
+                          if (!response || response.status !== 200 || response.type !== 'basic') {
+                              return response;
+                          }
+
+                          // 重要：レスポンスを clone する。レスポンスは Stream で
+                          // ブラウザ用とキャッシュ用の2回必要。なので clone して
+                          // 2つの Stream があるようにする
+                          let responseToCache = response.clone();
+
+                          caches.open(cacheName)
+                                .then((cache) => {
+                                    cache.put(event.request, responseToCache);
+                                });
+
+                          return response;
+                      });
+              })
+    );
+            });
 //e.requestは何が入っている
 
-self.addEventListener("active",(e) => {
+self.addEventListener("activate",(e) => {
     e.waitUntil(
         caches.keys().then(keyList => {
             return Promise.all(keyList.map(key => {

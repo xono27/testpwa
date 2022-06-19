@@ -7,7 +7,7 @@ app.get("/",(req,res) => {
     res.sendFile(__dirname + '/index.html');
 })
 
-var PORT = process.env.PORT ||  3003;
+var PORT = process.env.PORT ||  3006;
 
 
 // App listening on the below port

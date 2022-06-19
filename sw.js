@@ -8,7 +8,7 @@
 // }) 
 
 
-const cacheName ='cache-v1212'
+const cacheName ='cache-v121ad2'
 //ServiceWorkerで扱うファイル・キャッシュしておくファイル
 const appShellFiles = [
 "/icons/android-chrome-192x192.png",

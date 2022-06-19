@@ -47,16 +47,26 @@ const doNotification = () => {
     setTimeout(doNotification,10000);
 }
 
-document.getElementById('sendpush').onclick = function() {
-    fetch('./sendNotification', {
-      method: 'post',
-      headers: {
-        'Content-type': 'application/json'
-      },
-    });
-  };
+// document.getElementById('sendpush').onclick = function() {
+//     fetch('./sendNotification', {
+//       method: 'post',
+//       headers: {
+//         'Content-type': 'application/json'
+//       },
+//     });
+//   };
 
-// });
+// // });
+
+document.getElementById('sendpush').addEventListener("click",() => {
+    fetch('./sendNotification', {
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json'
+        },
+      });
+})
+
 
 
 

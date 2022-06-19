@@ -8,7 +8,7 @@
 // }) 
 
 
-const cacheName ='cache-v1'
+const cacheName ='cache-v1212'
 //ServiceWorkerで扱うファイル・キャッシュしておくファイル
 const appShellFiles = [
 "/icons/android-chrome-192x192.png",
@@ -44,7 +44,8 @@ self.addEventListener("fetch",(e) => {
     e.respondWith((async () => {
         const r = await caches.match(e.request);
         if(r)return r;
-        const response = await fetch(e.request);
+        const fetchRequest = e.request.clone();
+        const response = await fetch(fetchRequest);
         const cache = await caches.open(cacheName);
         cache.put(e.request,response.clone());
         return response;

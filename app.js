@@ -2,9 +2,33 @@
 //ServiceWorkerを登録
 //navigatorオブジェクトはブラウザに関する情報を管理する。
 //navigatorオブジェクトの参照を返す
-if("serviceWorker" in navigator){
-    navigator.serviceWorker.register("./sw.js").catch((err) => console.error(err));
-}
+
+// if("serviceWorker" in navigator){
+//     navigator.serviceWorker.register("./sw.js").catch((err) => console.error(err));
+// }
+
+navigator.serviceWorker.register("./sw.js");
+
+navigator.serviceWorker.ready
+.then(function(registration){
+    return registration.pushManager.getSubscription()
+    .then(async function(subscription) {
+        //既に購読済みならsubscriptionオブジェクトを返す
+        if(subscription){
+            return subscription
+        }
+        const response = await fetch('./vapidPublicKey');
+    const vapidPublicKey = await response.text();
+    const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
+    return registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: convertedVapidKey
+      });
+    });
+  }).then(function(subscription) {
+    console.log("success");
+    })
+// })
 
 
 const button = document.getElementById("notifications");
@@ -23,7 +47,16 @@ const doNotification = () => {
     setTimeout(doNotification,10000);
 }
 
+document.getElementById('sendpush').onclick = function() {
+    fetch('./sendNotification', {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/json'
+      },
+    });
+  };
 
+// });
 
 
 

@@ -101,6 +101,15 @@ self.addEventListener("activate",(e) => {
     )
 })
 
+self.addEventListener("push",(e) => {
+    e.waitUntil(
+        self.registration.showNotification("新しい記事",{
+            body:"PWAに関する新しい記事を書きました",
+            icon:"./icons/android-chrome-192x192.png",
+            tag:"new-pwa-article"
+        }) 
+    )
+})
 
 
 //サービスワーカーがどこにインストールされるのか
